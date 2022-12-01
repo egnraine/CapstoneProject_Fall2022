@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -16,7 +15,13 @@ public class GameManager : MonoBehaviour
 
         instance = this;
         SceneManager.sceneLoaded += LoadState;
+
         DontDestroyOnLoad(gameObject);
+    }
+
+    private void Update()
+    {
+        prevIndex = SceneManager.GetActiveScene().buildIndex;
     }
 
     // Resources
@@ -25,11 +30,14 @@ public class GameManager : MonoBehaviour
 
     // References
     public Player player;
+    public DialogueManager dialogueManager;
     //public FloatingTextManager floatingTextManager;
 
     // Logic
     public int coins;
     public int experience;
+
+    static int prevIndex;
 
     // Floating Text -- Errors
     /*public void ShowText(string msg, int fontSize, Color color, Vector3 position, Vector3 motion, float duration)
@@ -111,7 +119,12 @@ public class GameManager : MonoBehaviour
         // Change experience
         // experience = int.Parse(data[1]);
 
-        if (SceneManager.GetActiveScene().buildIndex != 0)
+        if (prevIndex != 2 && SceneManager.GetActiveScene().buildIndex == 1) // if previous scene does not equal "Farm" & current scene equals "Home"
+        {
+            GameObject.Find("Player").transform.position = GameObject.Find("SpawnPoint").transform.position;
+        }
+
+        else if (prevIndex == 1 || prevIndex == 2) // if previous scene equals "Home" or "Farm"
         {
             GameObject.Find("Player").transform.position = GameObject.Find("LoadPoint").transform.position;
         }

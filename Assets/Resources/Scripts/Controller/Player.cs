@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 
 // Takes and handles input and movement for a player character
 public class Player : MonoBehaviour
@@ -37,8 +36,6 @@ public class Player : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-
-        instance.transform.position = GameObject.Find("SpawnPoint").transform.position;
     }
 
     private void FixedUpdate()

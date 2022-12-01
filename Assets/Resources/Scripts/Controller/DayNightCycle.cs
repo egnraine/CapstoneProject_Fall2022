@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.Rendering;
@@ -38,7 +36,7 @@ public class DayNightCycle : MonoBehaviour
     {
         ppv = gameObject.GetComponent<Volume>();
 
-        tick = 5;
+        tick = 50;
         hours = 7;
     }
 
