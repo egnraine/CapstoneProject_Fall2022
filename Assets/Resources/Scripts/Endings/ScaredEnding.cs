@@ -9,17 +9,23 @@ public class ScaredEnding : MonoBehaviour
     public Animator player;
     public Animator gameOver;
 
+    public AudioSource BGM;
+
     private void Awake()
     {
         GameObject.Find("Player").GetComponent<Player>().LockMovement();
 
         player = GameObject.Find("Player").GetComponent<Animator>();
-        gameOver = GameObject.Find("GameOverContainer").GetComponent<Animator>();
+        gameOver = GameObject.Find("ScaredEndingContainer").GetComponent<Animator>();
+
+        BGM = GameObject.Find("AudioBGM").GetComponent<AudioSource>();
     }
 
     private IEnumerator Start()
     {
         yield return DialogueManager.instance.ShowDialogue(dialogue);
+        BGM.Stop();
+
         player.SetTrigger("rest");
 
         yield return new WaitForSeconds(2f);

@@ -1,13 +1,38 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Video;
 
 public class MainMenu : MonoBehaviour
 {
+    public VideoPlayer videoPlayer;
+    public GameObject fadeIn;
+    public double time;
+    public double currentTime;
+
+    private void Start()
+    {
+        time = GameObject.Find("IntroAnimation").GetComponent<VideoPlayer>().clip.length;
+    }
+
+    private void Update()
+    {
+        currentTime = GameObject.Find("IntroAnimation").GetComponent<VideoPlayer>().time;
+
+        if (currentTime > 77)
+        {
+            SceneManager.LoadScene("Home");
+        }
+    }
+
     public void PlayGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        if (fadeIn != null)
+        {
+            GameObject panel = Instantiate(fadeIn, Vector3.zero, Quaternion.identity) as GameObject;
+            Destroy(panel, 1);
+        }
+
+        videoPlayer.Play();
     }
 
     public void QuitGame()

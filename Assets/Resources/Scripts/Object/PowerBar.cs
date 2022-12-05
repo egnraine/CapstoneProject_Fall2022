@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -15,6 +14,7 @@ public class PowerBar : MonoBehaviour
     private bool isDirectionUp = true;
     private float amtPower = 0.0f;
     private int counter = 0;
+    private bool firstPress = false;
 
     public float powerSpeed;
     public Button powerUpBttn;
@@ -29,14 +29,15 @@ public class PowerBar : MonoBehaviour
     public Animator anim2;
     public Animator minigame;
 
-    public string[] sceneNames;
-
+    public AudioSource heartbeat;
+    public AudioSource BGM;
 
     private void Start()
     {
-        anim.speed = 1.3f;
-
         useTimer = false;
+        
+        heartbeat = GameObject.Find("AudioHeartbeat").GetComponent<AudioSource>();
+        BGM = GameObject.Find("AudioBGM").GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -46,9 +47,9 @@ public class PowerBar : MonoBehaviour
         {
             timeDuration -= Time.deltaTime;
         }
-
+        
         timerText.text = string.Format("Timer: " + "{0:00}", timeDuration);
-        counterText.text = "Total Breaths Taken: " + counter;
+        counterText.text = "Total Breaths Taken: " + counter + "/15";
         
         if (imagePowerUp.fillAmount == 0)
         {
@@ -114,6 +115,17 @@ public class PowerBar : MonoBehaviour
         isPowerUp = true;
         amtPower = 0.0f;
         isDirectionUp = true;
+
+        if (firstPress == false)
+        {
+            anim.speed = 1.3f;
+            anim2.speed = 1.3f;
+            heartbeat.pitch = 1.71f;
+            BGM.pitch = 0.75f;
+
+            firstPress = true;
+        }
+
     }
 
     public void EndPowerUp()
@@ -140,19 +152,28 @@ public class PowerBar : MonoBehaviour
             if (counter == 5)
             {
                 anim.speed = 1f;
-                anim2.speed = anim.speed;
+                anim2.speed = 1f;
+
+                BGM.pitch = 0.85f;
+                heartbeat.pitch = 1.65f;
             }
 
             if (counter == 10)
             {
                 anim.speed = 0.7f;
-                anim2.speed = anim.speed;
+                anim2.speed = 0.7f;
+
+                BGM.pitch = 0.95f;
+                heartbeat.pitch = 1.5f;
             }
 
             if (counter == 15)
             {
                 anim.speed = 0.4f;
-                anim2.speed = anim.speed;
+                anim2.speed = 0.4f;
+
+                BGM.pitch = 1f;
+                heartbeat.pitch = 1.36f;
 
                 GameManager.instance.GrantXp(2);
             }
@@ -161,7 +182,6 @@ public class PowerBar : MonoBehaviour
 
     public void BadEnding()
     {
-        string sceneName = sceneNames[Random.Range(0, sceneNames.Length)];
-        SceneManager.LoadScene(sceneName);
+        SceneManager.LoadScene("ScaredEnding");
     }
 }

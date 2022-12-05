@@ -14,6 +14,9 @@ public class DemoPortal : MonoBehaviour
     private bool dialogueCalled = false;
     public Image blur;
 
+    public AudioSource BGM;
+    public AudioSource doorOpen;
+
     static DemoPortal instance;
 
     private void Awake()
@@ -27,6 +30,9 @@ public class DemoPortal : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        BGM = GameObject.Find("AudioBGM").GetComponent<AudioSource>();
+        doorOpen = GameObject.Find("AudioDoor").GetComponent<AudioSource>();
     }
 
     private IEnumerator OnTriggerStay2D(Collider2D collision)
@@ -52,6 +58,7 @@ public class DemoPortal : MonoBehaviour
 
                     dialogueCalled = true;
 
+                    BGM.pitch = 0.75f;
                     anim.speed = 1.3f;
 
                     CameraShaker.Instance.StartShake(.5f, .5f, 0.1f);
@@ -72,6 +79,7 @@ public class DemoPortal : MonoBehaviour
             {
                 // Teleport Player
                 anim.speed = 0.4f;
+                doorOpen.Play();
 
                 SceneManager.LoadScene("Farm");
 

@@ -7,7 +7,7 @@ public class QuitScreen : MonoBehaviour
 {
     public void TitleScreen()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        SceneManager.LoadScene("StartMenu");
     }
 
     public void QuitGame()

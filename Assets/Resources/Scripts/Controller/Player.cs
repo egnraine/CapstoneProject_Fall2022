@@ -11,6 +11,8 @@ public class Player : MonoBehaviour
     public ContactFilter2D movementFilter;
     static Player instance;
 
+    public AudioSource audio;
+
     private void Awake()
     {
         if (instance == null)
@@ -22,6 +24,8 @@ public class Player : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        audio = GameObject.Find("AudioFootstep").GetComponent<AudioSource>();
     }
 
     Vector2 movementInput;
@@ -60,9 +64,11 @@ public class Player : MonoBehaviour
 
                 animator.SetBool("isMoving", success);
             }
+
             else
             {
                 animator.SetBool("isMoving", false);
+                audio.Stop();
             }
 
             // Set direction of sprite to movement direction
@@ -71,21 +77,29 @@ public class Player : MonoBehaviour
                 animator.SetFloat("Horizontal", movementInput.x);
                 animator.SetFloat("Vertical", movementInput.y);
             }
+
             else if (movementInput.x > 0)
             {
                 animator.SetFloat("Horizontal", movementInput.x);
                 animator.SetFloat("Vertical", movementInput.y);
             }
+            
             else if (movementInput.y < 0)
             {
                 animator.SetFloat("Horizontal", movementInput.x);
                 animator.SetFloat("Vertical", movementInput.y);
             }
+            
             else if (movementInput.y > 0)
             {
                 animator.SetFloat("Horizontal", movementInput.x);
                 animator.SetFloat("Vertical", movementInput.y);
             }
+        }
+
+        else if (!canMove)
+        {
+            audio.Stop();
         }
     }
 
@@ -110,17 +124,18 @@ public class Player : MonoBehaviour
                 return false;
             }
         }
+
         else
         {
             // Can't move if there's no direction to move in
             return false;
         }
-
     }
 
     void OnMove(InputValue movementValue)
     {
         movementInput = movementValue.Get<Vector2>();
+        audio.Play();
     }
 
 

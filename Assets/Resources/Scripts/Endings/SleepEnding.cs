@@ -26,5 +26,4 @@ public class SleepEnding : MonoBehaviour
         yield return new WaitForSeconds(3.5f);
         gameOver.SetTrigger("show");
     }
-
 }

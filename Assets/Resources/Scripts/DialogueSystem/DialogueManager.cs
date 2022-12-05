@@ -11,6 +11,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI dialogueText;
     [SerializeField] int lettersPerSecond;
 
+    [SerializeField] AudioSource audio;
 
     public static DialogueManager instance { get; private set; }
 
@@ -25,6 +26,8 @@ public class DialogueManager : MonoBehaviour
         instance = this;
 
         DontDestroyOnLoad(gameObject);
+
+        audio = GameObject.Find("AudioUIClick").GetComponent<AudioSource>();
     }
 
     public bool isShowing { get; private set; }
@@ -39,6 +42,7 @@ public class DialogueManager : MonoBehaviour
         if (waitForInput)
         {
             yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
+            audio.Play();
         }
 
         if (autoClose)
@@ -66,6 +70,8 @@ public class DialogueManager : MonoBehaviour
         {
             yield return WriteText(line);
             yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
+
+            audio.Play();
         }
 
         if (choices  != null && choices.Count > 1)

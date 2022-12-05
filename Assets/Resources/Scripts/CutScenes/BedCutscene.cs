@@ -9,6 +9,11 @@ public class BedCutscene : MonoBehaviour
     [SerializeField] Dialog dialogue2;
     [SerializeField] Dialog dialogue3;
 
+    public AudioSource audio;
+    public AudioClip audioClip;
+
+    public AudioSource audio2;
+
     public GameObject screen;
 
     private bool dialogueCalled;
@@ -30,6 +35,9 @@ public class BedCutscene : MonoBehaviour
     private IEnumerator Start()
     {
         GameObject.Find("Player").GetComponent<Player>().LockMovement();
+        audio = GameObject.Find("AudioKnock").GetComponent<AudioSource>();
+        audio2 = GameObject.Find("AudioRustling").GetComponent<AudioSource>();
+
         int selectedChoice = 0;
 
         if (dialogueCalled == false)
@@ -49,8 +57,15 @@ public class BedCutscene : MonoBehaviour
 
                 dialogueCalled = true;
 
-                yield return new WaitForSeconds(3f);
+                audio2.Play();
+
+                yield return new WaitForSeconds(2f);
                 screen.SetActive(false);
+
+                yield return new WaitForSeconds(1f);
+                yield return DialogueManager.instance.ShowDialogueText("Look for the objective in this area");
+                yield return new WaitForSeconds(1f);
+
                 this.enabled = false;
             }
 
@@ -79,10 +94,16 @@ public class BedCutscene : MonoBehaviour
 
                     dialogueCalled = true;
 
-                    yield return new WaitForSeconds(3f);
-                    screen.SetActive(false);
-                    this.enabled = false;
+                    audio2.Play();
 
+                    yield return new WaitForSeconds(2f);
+                    screen.SetActive(false);
+
+                    yield return new WaitForSeconds(1f);
+                    yield return DialogueManager.instance.ShowDialogueText("Look for the objective in this area");
+                    yield return new WaitForSeconds(1f);
+
+                    this.enabled = false;
                 }
 
                 else if (selectedChoice == 1)
@@ -94,10 +115,11 @@ public class BedCutscene : MonoBehaviour
                     yield return DialogueManager.instance.ShowDialogueText($"...Yeah, I've already done enough. I should just rest some more...");
 
                     yield return new WaitForSeconds(4f);
+                    
+                    audio.PlayOneShot(audioClip);
 
                     yield return DialogueManager.instance.ShowDialogue(dialogue3, new List<string>() { "Yes", "No" },
                         (choiceIndex) => selectedChoice = choiceIndex);
-
 
                     if (selectedChoice == 0)
                     {
@@ -110,10 +132,16 @@ public class BedCutscene : MonoBehaviour
 
                         dialogueCalled = true;
 
-                        yield return new WaitForSeconds(3f);
-                        screen.SetActive(false);
-                        this.enabled = false;
+                        audio2.Play();
 
+                        yield return new WaitForSeconds(2f);
+                        screen.SetActive(false);
+
+                        yield return new WaitForSeconds(1f);
+                        yield return DialogueManager.instance.ShowDialogueText("Look for the objective in this area");
+                        yield return new WaitForSeconds(1f);
+
+                        this.enabled = false;
                     }
 
                     else if (selectedChoice == 1)
