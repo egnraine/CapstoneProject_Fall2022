@@ -35,6 +35,8 @@ public class BedCutscene : MonoBehaviour
     private IEnumerator Start()
     {
         GameObject.Find("Player").GetComponent<Player>().LockMovement();
+
+        screen = GameObject.Find("BlackScreen");
         audio = GameObject.Find("AudioKnock").GetComponent<AudioSource>();
         audio2 = GameObject.Find("AudioRustling").GetComponent<AudioSource>();
 
@@ -62,7 +64,7 @@ public class BedCutscene : MonoBehaviour
                 yield return new WaitForSeconds(2f);
                 screen.SetActive(false);
 
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(0.5f);
                 yield return DialogueManager.instance.ShowDialogueText("Look for the objective in this area");
                 yield return new WaitForSeconds(1f);
 
@@ -99,7 +101,7 @@ public class BedCutscene : MonoBehaviour
                     yield return new WaitForSeconds(2f);
                     screen.SetActive(false);
 
-                    yield return new WaitForSeconds(1f);
+                    yield return new WaitForSeconds(0.5f);
                     yield return DialogueManager.instance.ShowDialogueText("Look for the objective in this area");
                     yield return new WaitForSeconds(1f);
 
@@ -137,7 +139,7 @@ public class BedCutscene : MonoBehaviour
                         yield return new WaitForSeconds(2f);
                         screen.SetActive(false);
 
-                        yield return new WaitForSeconds(1f);
+                        yield return new WaitForSeconds(0.5f);
                         yield return DialogueManager.instance.ShowDialogueText("Look for the objective in this area");
                         yield return new WaitForSeconds(1f);
 

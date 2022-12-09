@@ -37,7 +37,7 @@ public class DayNightCycle : MonoBehaviour
         ppv = gameObject.GetComponent<Volume>();
 
         tick = 50;
-        hours = 7;
+        hours = 5;
     }
 
     // Update is called once per frame

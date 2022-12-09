@@ -9,6 +9,8 @@ public class BedClass : MonoBehaviour
 
     public string[] sceneNames;
     public int counter;
+
+    public GameObject globalVol;
     static BedClass instance;
 
     private void Awake()
@@ -22,6 +24,8 @@ public class BedClass : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        globalVol = GameObject.Find("GlobalVolume");
     }
 
     private IEnumerator OnTriggerStay2D(Collider2D collision)
@@ -68,6 +72,9 @@ public class BedClass : MonoBehaviour
 
         counter++;
         Debug.Log("Counter: " + counter);
+
+        globalVol.GetComponent<DayNightCycle>().hours = 7;
+        globalVol.GetComponent<DayNightCycle>().mins = 0;
     }
 
     public void BadEnding()

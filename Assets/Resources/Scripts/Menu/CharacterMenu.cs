@@ -14,15 +14,22 @@ public class CharacterMenu : MonoBehaviour
     public Image treeGrowthSprite;
     public RectTransform xpBar;
     private Animator anim;
+    public AudioSource UIClick;
 
     void Start()
     {
         anim = gameObject.GetComponent<Animator>();
+        UIClick = GameObject.Find("AudioUIClick").GetComponent<AudioSource>();
     }
 
     public void OnClickOpenInventory()
     {
         anim.SetTrigger("show");
+    }
+
+    public void OnClickAudio()
+    {
+        UIClick.Play();
     }
 
     // Add Entry = Add to Running Total

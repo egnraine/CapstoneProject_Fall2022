@@ -8,6 +8,7 @@ public class MainMenu : MonoBehaviour
     public GameObject fadeIn;
     public double time;
     public double currentTime;
+    public GameObject HUD;
 
     private void Start()
     {
